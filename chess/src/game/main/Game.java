@@ -35,11 +35,11 @@ public class Game extends Canvas implements Runnable {
 		this.renderer = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_RGB);
 	}
 
-	public void tick() {
+	private void tick() {
 		// Code
 	}
 
-	public void render() {
+	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 
 		if (bs == null) {
