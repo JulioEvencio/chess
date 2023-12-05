@@ -6,8 +6,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import game.chess.ChessMatch;
 
@@ -42,7 +44,11 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void initChessMatch() {
-		this.chessMatch = new ChessMatch();
+		try {
+			this.chessMatch = new ChessMatch();
+		} catch (IOException e) {
+			Game.exitWithError("Erro ao iniciar partida!");
+		}
 	}
 
 	private void tick() {
@@ -101,6 +107,15 @@ public class Game extends Canvas implements Runnable {
 				timer = System.currentTimeMillis();
 			}
 		}
+	}
+
+	public static void exit() {
+		System.exit(0);
+	}
+
+	public static void exitWithError(String error) {
+		JOptionPane.showMessageDialog(null, error, "Erro", JOptionPane.ERROR_MESSAGE);
+		Game.exit();
 	}
 
 	public static void main(String[] args) {

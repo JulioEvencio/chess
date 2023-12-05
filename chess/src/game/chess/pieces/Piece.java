@@ -10,15 +10,15 @@ import game.chess.Position;
 public abstract class Piece {
 
 	private final Color color;
-	private final Position position;
+	private Position position;
 
 	private final Board board;
 
-	private BufferedImage sprite;
+	protected BufferedImage sprite;
 
-	public Piece(Color color, Position position, Board board) {
+	public Piece(Color color, Board board) {
 		this.color = color;
-		this.position = position;
+		this.position = null;
 
 		this.board = board;
 
@@ -31,6 +31,10 @@ public abstract class Piece {
 
 	public Position getPosition() {
 		return this.position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
 	public Board getBoard() {
