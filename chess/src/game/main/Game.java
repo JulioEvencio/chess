@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import game.chess.ChessMatch;
+
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +20,8 @@ public class Game extends Canvas implements Runnable {
 	public static final int HEIGHT = 600;
 
 	private final BufferedImage renderer;
+
+	private ChessMatch chessMatch;
 
 	public Game() {
 		this.setPreferredSize(new Dimension(Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE));
@@ -33,6 +37,12 @@ public class Game extends Canvas implements Runnable {
 		frame.setVisible(true);
 
 		this.renderer = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_RGB);
+
+		this.initChessMatch();
+	}
+
+	private void initChessMatch() {
+		this.chessMatch = new ChessMatch();
 	}
 
 	private void tick() {
@@ -52,7 +62,7 @@ public class Game extends Canvas implements Runnable {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 
-		// Code
+		this.chessMatch.render(render);
 
 		render.dispose();
 

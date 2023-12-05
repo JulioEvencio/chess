@@ -22,4 +22,16 @@ public class Board {
 		return COLUMN;
 	}
 
+	public Piece getPiece(int row, int column) {
+		return pieces[row][column];
+	}
+
+	public Piece getPiece(Position position) {
+		return pieces[position.getRow()][position.getColumn()];
+	}
+
+	public Piece[][] getPieces() {
+		return pieces;
+	}
+
 }
