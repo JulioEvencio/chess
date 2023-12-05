@@ -1,6 +1,5 @@
 package game.chess;
 
-import game.chess.exceptions.ChessException;
 import game.chess.pieces.Piece;
 
 public class Board {
@@ -35,11 +34,7 @@ public class Board {
 		return pieces;
 	}
 
-	public void placePiece(Piece piece, Position position) throws ChessException {
-		if (this.thereIsAPiece(position)) {
-			throw new ChessException("There is already a piece on position");
-		}
-
+	public void placePiece(Piece piece, Position position) {
 		this.pieces[position.getRow()][position.getColumn()] = piece;
 
 		piece.setPosition(position);
