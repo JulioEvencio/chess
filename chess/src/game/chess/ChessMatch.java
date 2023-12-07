@@ -44,14 +44,17 @@ public class ChessMatch {
 	}
 
 	private void performChessMove() {
-		if (this.sourcePosition != null) {
+		if (this.sourcePosition != null && this.validateTargetPosition()) {
 			this.targetPosition = this.clickPosition;
 
 			this.makeMove();
-		} else if (this.board.thereIsAPiece(this.clickPosition)
-				&& this.board.getPiece(this.clickPosition).isThereAnyPossibleMove()) {
+		} else if (this.board.thereIsAPiece(this.clickPosition) && this.board.getPiece(this.clickPosition).isThereAnyPossibleMove()) {
 			this.sourcePosition = this.clickPosition;
 		}
+	}
+
+	private boolean validateTargetPosition() {
+		return this.board.getPiece(this.sourcePosition).possibleMove(this.clickPosition);
 	}
 
 	private Piece makeMove() {
@@ -80,12 +83,12 @@ public class ChessMatch {
 					this.renderRect(render, Color.GRAY, squareX, squareY, squareWidth, squareHeight);
 				}
 
-				if (this.targetPosition != null && this.targetPosition.getRow() == row && this.targetPosition.getColumn() == column) {
-					this.renderRect(render, Color.YELLOW, squareX, squareY, squareWidth, squareHeight);
-				}
-				
 				if (this.board.getPiece(this.clickPosition) != null && this.clickPosition != null && this.clickPosition.getRow() == row && this.clickPosition.getColumn() == column) {
 					this.renderRect(render, Color.CYAN, squareX, squareY, squareWidth, squareHeight);
+				}
+
+				if (this.targetPosition != null && this.targetPosition.getRow() == row && this.targetPosition.getColumn() == column) {
+					this.renderRect(render, Color.YELLOW, squareX, squareY, squareWidth, squareHeight);
 				}
 
 				Piece piece = this.board.getPiece(row, column);

@@ -61,6 +61,12 @@ public abstract class Piece {
 		return false;
 	}
 
+	public boolean isThereOpponentPiece(Position position) {
+		Piece piece = this.board.getPiece(position);
+
+		return piece != null && this.color != piece.getColor();
+	}
+
 	public void render(Graphics render, int x, int y, int width, int height) {
 		render.drawImage(this.sprite, x, y, width, height, null);
 	}
