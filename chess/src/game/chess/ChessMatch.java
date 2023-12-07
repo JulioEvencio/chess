@@ -54,7 +54,12 @@ public class ChessMatch {
 	}
 
 	private boolean validateTargetPosition() {
-		return this.board.getPiece(this.sourcePosition).possibleMove(this.clickPosition);
+		if (this.board.getPiece(this.sourcePosition).possibleMove(this.clickPosition)) {
+			return true;
+		} else {
+			this.sourcePosition = null;
+			return false;
+		}
 	}
 
 	private Piece makeMove() {
@@ -89,6 +94,14 @@ public class ChessMatch {
 
 				if (this.targetPosition != null && this.targetPosition.getRow() == row && this.targetPosition.getColumn() == column) {
 					this.renderRect(render, Color.YELLOW, squareX, squareY, squareWidth, squareHeight);
+				}
+				
+				if (this.sourcePosition != null) {
+					Piece pieceSelected = this.board.getPiece(this.sourcePosition);
+
+					if (pieceSelected != null && pieceSelected.possibleMoves()[row][column]) {
+						this.renderRect(render, Color.GREEN, squareX, squareY, squareWidth, squareHeight);
+					}
 				}
 
 				Piece piece = this.board.getPiece(row, column);
