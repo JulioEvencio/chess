@@ -20,4 +20,11 @@ public class Rook extends Piece {
 		}
 	}
 
+	@Override
+	public boolean[][] possibleMoves() {
+		boolean mat[][] = new boolean[super.getBoard().getROW()][super.getBoard().getCOLUMN()];
+
+		return mat;
+	}
+
 }

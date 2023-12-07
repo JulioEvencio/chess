@@ -14,12 +14,14 @@ public class ChessMatch {
 
 	private final Board board;
 
+	private Position clickPosition;
 	private Position sourcePosition;
 	private Position targetPosition;
 
 	public ChessMatch() throws IOException {
 		this.board = new Board();
 
+		this.clickPosition = new Position(5, 5);
 		this.sourcePosition = null;
 		this.targetPosition = null;
 
@@ -36,16 +38,19 @@ public class ChessMatch {
 		int row = e.getY() / (Game.HEIGHT / this.board.getROW());
 		int column = e.getX() / (Game.WIDTH / this.board.getCOLUMN());
 
-		this.performChessMove(new Position(row, column));
+		this.clickPosition = new Position(row, column);
+
+		this.performChessMove();
 	}
 
-	private void performChessMove(Position position) {
+	private void performChessMove() {
 		if (this.sourcePosition != null) {
-			this.targetPosition = position;
+			this.targetPosition = this.clickPosition;
 
 			this.makeMove();
-		} else if (this.board.thereIsAPiece(position)) {
-			this.sourcePosition = position;
+		} else if (this.board.thereIsAPiece(this.clickPosition)
+				&& this.board.getPiece(this.clickPosition).isThereAnyPossibleMove()) {
+			this.sourcePosition = this.clickPosition;
 		}
 	}
 
@@ -75,12 +80,12 @@ public class ChessMatch {
 					this.renderRect(render, Color.GRAY, squareX, squareY, squareWidth, squareHeight);
 				}
 
-				if (this.sourcePosition != null && this.sourcePosition.getRow() == row && this.sourcePosition.getColumn() == column) {
-					this.renderRect(render, Color.CYAN, squareX, squareY, squareWidth, squareHeight);
-				}
-				
 				if (this.targetPosition != null && this.targetPosition.getRow() == row && this.targetPosition.getColumn() == column) {
 					this.renderRect(render, Color.YELLOW, squareX, squareY, squareWidth, squareHeight);
+				}
+				
+				if (this.board.getPiece(this.clickPosition) != null && this.clickPosition != null && this.clickPosition.getRow() == row && this.clickPosition.getColumn() == column) {
+					this.renderRect(render, Color.CYAN, squareX, squareY, squareWidth, squareHeight);
 				}
 
 				Piece piece = this.board.getPiece(row, column);
@@ -91,11 +96,11 @@ public class ChessMatch {
 			}
 		}
 	}
-	
+
 	private void renderRect(Graphics render, Color color, int x, int y, int width, int height) {
 		render.setColor(color);
 		render.fillRect(x, y, width, height);
-		
+
 		render.setColor(Color.BLACK);
 		render.drawRect(x, y, width, height);
 	}
