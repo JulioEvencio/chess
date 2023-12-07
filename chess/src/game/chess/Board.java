@@ -40,6 +40,18 @@ public class Board {
 		piece.setPosition(position);
 	}
 
+	public Piece removePiece(Position position) {
+		Piece piece = this.getPiece(position);
+
+		if (piece != null) {
+			piece.setPosition(null);
+
+			this.pieces[position.getRow()][position.getColumn()] = null;
+		}
+
+		return piece;
+	}
+
 	public boolean thereIsAPiece(Position position) {
 		return this.getPiece(position) != null;
 	}

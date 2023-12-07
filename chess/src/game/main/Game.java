@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import javax.swing.JOptionPane;
 
 import game.chess.ChessMatch;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,6 +28,7 @@ public class Game extends Canvas implements Runnable {
 	private ChessMatch chessMatch;
 
 	public Game() {
+		this.addMouseListener(this);
 		this.setPreferredSize(new Dimension(Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE));
 
 		JFrame frame = new JFrame();
@@ -107,6 +110,31 @@ public class Game extends Canvas implements Runnable {
 				timer = System.currentTimeMillis();
 			}
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// Code
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// Code
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		this.chessMatch.mouseReleased(e);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// Code
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// Code
 	}
 
 	public static void exit() {
