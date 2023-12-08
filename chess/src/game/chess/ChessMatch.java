@@ -12,6 +12,8 @@ import game.main.Game;
 
 public class ChessMatch {
 
+	private game.chess.Color currentPlayer;
+
 	private final Board board;
 
 	private Position clickPosition;
@@ -19,6 +21,8 @@ public class ChessMatch {
 	private Position targetPosition;
 
 	public ChessMatch() throws IOException {
+		this.currentPlayer = game.chess.Color.WHITE;
+		
 		this.board = new Board();
 
 		this.clickPosition = new Position(5, 5);
@@ -48,7 +52,8 @@ public class ChessMatch {
 			this.targetPosition = this.clickPosition;
 
 			this.makeMove();
-		} else if (this.board.thereIsAPiece(this.clickPosition) && this.board.getPiece(this.clickPosition).isThereAnyPossibleMove()) {
+			this.nextTurn();
+		} else if (this.validateSourcePosition()) {
 			this.sourcePosition = this.clickPosition;
 		}
 	}
@@ -61,6 +66,12 @@ public class ChessMatch {
 			return false;
 		}
 	}
+	
+	private boolean validateSourcePosition() {
+		Piece piece = this.board.getPiece(this.clickPosition);
+		
+		return piece != null && piece.isThereAnyPossibleMove() && piece.getColor() == this.currentPlayer;
+	}
 
 	private Piece makeMove() {
 		Piece piece = this.board.removePiece(this.sourcePosition);
@@ -71,6 +82,10 @@ public class ChessMatch {
 		this.sourcePosition = null;
 
 		return pieceCaptured;
+	}
+	
+	private void nextTurn() {
+		this.currentPlayer = (this.currentPlayer == game.chess.Color.WHITE) ? game.chess.Color.BLACK : game.chess.Color.WHITE;
 	}
 
 	public void render(Graphics render) {
@@ -88,7 +103,7 @@ public class ChessMatch {
 					this.renderRect(render, Color.GRAY, squareX, squareY, squareWidth, squareHeight);
 				}
 
-				if (this.board.getPiece(this.clickPosition) != null && this.clickPosition != null && this.clickPosition.getRow() == row && this.clickPosition.getColumn() == column) {
+				if (this.board.getPiece(this.clickPosition) != null && this.board.getPiece(this.clickPosition).getColor() == this.currentPlayer && this.clickPosition.getRow() == row && this.clickPosition.getColumn() == column) {
 					this.renderRect(render, Color.CYAN, squareX, squareY, squareWidth, squareHeight);
 				}
 
