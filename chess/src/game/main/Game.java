@@ -126,7 +126,9 @@ public class Game extends Canvas implements Runnable, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		try {
-			this.chessMatch.mouseReleased(e);
+			if (!this.chessMatch.isCheckmate()) {
+				this.chessMatch.mouseReleased(e);
+			}
 		} catch (ChessException chessError) {
 			Game.exitWithError(chessError.getMessage());
 		}

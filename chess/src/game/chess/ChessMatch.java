@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import game.chess.exceptions.ChessException;
 import game.chess.pieces.King;
 import game.chess.pieces.Piece;
@@ -14,6 +16,7 @@ import game.main.Game;
 public class ChessMatch {
 
 	private boolean check;
+	private boolean checkmate;
 	private game.chess.Color currentPlayer;
 
 	private final Board board;
@@ -24,8 +27,9 @@ public class ChessMatch {
 
 	public ChessMatch() throws IOException {
 		this.check = false;
+		this.checkmate = false;
 		this.currentPlayer = game.chess.Color.WHITE;
-		
+
 		this.board = new Board();
 
 		this.clickPosition = new Position(5, 5);
@@ -41,6 +45,10 @@ public class ChessMatch {
 		this.board.placePiece(new Rook(game.chess.Color.WHITE, this.board), new Position(7, 0));
 	}
 
+	public boolean isCheckmate() {
+		return this.checkmate;
+	}
+
 	public void mouseReleased(MouseEvent e) throws ChessException {
 		int row = e.getY() / (Game.HEIGHT / this.board.getROW());
 		int column = e.getX() / (Game.WIDTH / this.board.getCOLUMN());
@@ -54,14 +62,32 @@ public class ChessMatch {
 		if (this.sourcePosition != null && this.validateTargetPosition()) {
 			this.targetPosition = this.clickPosition;
 
-			Piece pieceCaptured = this.makeMove();
-			
+			Piece pieceCaptured = this.makeMove(this.sourcePosition, this.targetPosition);
+
 			if (this.testCheck(this.currentPlayer)) {
-				this.undoMove(pieceCaptured);
+				this.undoMove(this.sourcePosition, this.targetPosition, pieceCaptured);
 			} else {
 				this.nextTurn();
 			}
-			
+
+			if (this.testCheckMate(this.getOpponent(this.currentPlayer))) {
+				String message;
+
+				this.checkmate = true;
+
+				if (this.currentPlayer == game.chess.Color.WHITE) {
+					message = "Black won";
+				} else {
+					message = "White won";
+				}
+
+				Thread thread = new Thread(() -> {
+					JOptionPane.showMessageDialog(null, message, "Checkmate", JOptionPane.INFORMATION_MESSAGE);
+				});
+
+				thread.start();
+			}
+
 			this.check = this.testCheck(this.getOpponent(this.currentPlayer));
 			this.sourcePosition = null;
 		} else if (this.validateSourcePosition()) {
@@ -77,72 +103,108 @@ public class ChessMatch {
 			return false;
 		}
 	}
-	
+
 	private boolean validateSourcePosition() {
 		Piece piece = this.board.getPiece(this.clickPosition);
-		
+
 		return piece != null && piece.isThereAnyPossibleMove() && piece.getColor() == this.currentPlayer;
 	}
 
-	private Piece makeMove() {
-		Piece piece = this.board.removePiece(this.sourcePosition);
-		Piece pieceCaptured = this.board.removePiece(this.targetPosition);
+	private Piece makeMove(Position source, Position target) {
+		Piece piece = this.board.removePiece(source);
+		Piece pieceCaptured = this.board.removePiece(target);
 
-		this.board.placePiece(piece, this.targetPosition);
+		this.board.placePiece(piece, target);
 
 		return pieceCaptured;
 	}
-	
-	private void undoMove(Piece pieceCaptured) {
-		Piece piece = this.board.removePiece(this.targetPosition);
-		
-		this.board.placePiece(piece, this.sourcePosition);
-		
+
+	private void undoMove(Position source, Position target, Piece pieceCaptured) {
+		Piece piece = this.board.removePiece(target);
+
+		this.board.placePiece(piece, source);
+
 		if (pieceCaptured != null) {
-			this.board.placePiece(pieceCaptured, this.targetPosition);
+			this.board.placePiece(pieceCaptured, target);
 		}
 	}
-	
+
 	private void nextTurn() {
 		this.currentPlayer = this.getOpponent(this.currentPlayer);
 	}
-	
+
 	private game.chess.Color getOpponent(game.chess.Color color) {
 		return (this.currentPlayer == game.chess.Color.WHITE) ? game.chess.Color.BLACK : game.chess.Color.WHITE;
 	}
-	
+
 	private Piece getKing(game.chess.Color color) throws ChessException {
 		for (int i = 0; i < this.board.getROW(); i++) {
 			for (int j = 0; j < this.board.getCOLUMN(); j++) {
 				Piece piece = this.board.getPiece(i, j);
-				
+
 				if (piece instanceof King && piece.getColor() == this.currentPlayer) {
 					return piece;
 				}
 			}
 		}
-		
+
 		throw new ChessException("An unexpected error occurred...");
 	}
-	
+
 	private boolean testCheck(game.chess.Color color) throws ChessException {
 		Position kingPosition = this.getKing(color).getPosition();
-		
+
 		for (int i = 0; i < this.board.getROW(); i++) {
 			for (int j = 0; j < this.board.getCOLUMN(); j++) {
 				Piece piece = this.board.getPiece(i, j);
-				
+
 				if (piece != null && piece.getColor() == this.getOpponent(color)) {
 					boolean[][] mat = piece.possibleMoves();
-					
+
 					if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
 						return true;
 					}
 				}
 			}
 		}
-		
+
 		return false;
+	}
+
+	private boolean testCheckMate(game.chess.Color color) throws ChessException {
+		if (!this.testCheck(color)) {
+			return false;
+		}
+
+		for (int i = 0; i < this.board.getROW(); i++) {
+			for (int j = 0; j < this.board.getCOLUMN(); j++) {
+				Piece piece = this.board.getPiece(i, j);
+
+				if (piece != null && piece.getColor() == this.currentPlayer) {
+					boolean[][] mat = piece.possibleMoves();
+
+					for (int x = 0; x < mat.length; x++) {
+						for (int y = 0; y < mat.length; y++) {
+							if (mat[x][y]) {
+								Position source = piece.getPosition();
+								Position target = new Position(x, y);
+								Piece pieceCaptured = this.makeMove(source, target);
+
+								boolean testCheck = this.testCheck(color);
+
+								this.undoMove(source, target, pieceCaptured);
+
+								if (!testCheck) {
+									return false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public void render(Graphics render) {
@@ -167,7 +229,7 @@ public class ChessMatch {
 				if (this.targetPosition != null && this.targetPosition.getRow() == row && this.targetPosition.getColumn() == column) {
 					this.renderRect(render, Color.YELLOW, squareX, squareY, squareWidth, squareHeight);
 				}
-				
+
 				if (this.sourcePosition != null) {
 					Piece pieceSelected = this.board.getPiece(this.sourcePosition);
 
@@ -182,7 +244,7 @@ public class ChessMatch {
 					if (this.check && piece instanceof King && piece.getColor() == this.currentPlayer) {
 						this.renderRect(render, Color.RED, squareX, squareY, squareWidth, squareHeight);
 					}
-					
+
 					piece.render(render, squareX, squareY, squareWidth, squareHeight);
 				}
 			}
