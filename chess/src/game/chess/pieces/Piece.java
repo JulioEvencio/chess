@@ -11,6 +11,7 @@ public abstract class Piece {
 
 	private final Color color;
 	private Position position;
+	private int moveCount;
 
 	private final Board board;
 
@@ -35,6 +36,18 @@ public abstract class Piece {
 
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	public int getMoveCount() {
+		return this.moveCount;
+	}
+
+	public void increaseMoveCount() {
+		this.moveCount++;
+	}
+
+	public void decreaseMoveCount() {
+		this.moveCount--;
 	}
 
 	public Board getBoard() {

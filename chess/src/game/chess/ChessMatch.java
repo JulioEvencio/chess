@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import game.chess.exceptions.ChessException;
 import game.chess.pieces.King;
+import game.chess.pieces.Pawn;
 import game.chess.pieces.Piece;
 import game.chess.pieces.Rook;
 import game.main.Game;
@@ -39,10 +40,28 @@ public class ChessMatch {
 		this.board.placePiece(new Rook(game.chess.Color.BLACK, this.board), new Position(0, 0));
 		this.board.placePiece(new King(game.chess.Color.BLACK, this.board), new Position(0, 4));
 		this.board.placePiece(new Rook(game.chess.Color.BLACK, this.board), new Position(0, 7));
+		
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 0));
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 1));
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 2));
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 3));
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 4));
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 5));
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 6));
+		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 7));
 
 		this.board.placePiece(new Rook(game.chess.Color.WHITE, this.board), new Position(7, 7));
 		this.board.placePiece(new King(game.chess.Color.WHITE, this.board), new Position(7, 4));
 		this.board.placePiece(new Rook(game.chess.Color.WHITE, this.board), new Position(7, 0));
+		
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 0));
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 1));
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 2));
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 3));
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 4));
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 5));
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 6));
+		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 7));
 	}
 
 	public boolean isCheckmate() {
@@ -115,14 +134,18 @@ public class ChessMatch {
 		Piece pieceCaptured = this.board.removePiece(target);
 
 		this.board.placePiece(piece, target);
+		
+		piece.increaseMoveCount();
 
 		return pieceCaptured;
 	}
 
 	private void undoMove(Position source, Position target, Piece pieceCaptured) {
 		Piece piece = this.board.removePiece(target);
-
+		
 		this.board.placePiece(piece, source);
+		
+		piece.decreaseMoveCount();
 
 		if (pieceCaptured != null) {
 			this.board.placePiece(pieceCaptured, target);
