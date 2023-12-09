@@ -13,6 +13,7 @@ import game.chess.pieces.King;
 import game.chess.pieces.Knight;
 import game.chess.pieces.Pawn;
 import game.chess.pieces.Piece;
+import game.chess.pieces.Queen;
 import game.chess.pieces.Rook;
 import game.main.Game;
 
@@ -42,6 +43,7 @@ public class ChessMatch {
 		this.board.placePiece(new Rook(game.chess.Color.BLACK, this.board), new Position(0, 0));
 		this.board.placePiece(new Knight(game.chess.Color.BLACK, this.board), new Position(0, 1));
 		this.board.placePiece(new Bishop(game.chess.Color.BLACK, this.board), new Position(0, 2));
+		this.board.placePiece(new Queen(game.chess.Color.BLACK, this.board), new Position(0, 3));
 		this.board.placePiece(new King(game.chess.Color.BLACK, this.board), new Position(0, 4));
 		this.board.placePiece(new Bishop(game.chess.Color.BLACK, this.board), new Position(0, 5));
 		this.board.placePiece(new Knight(game.chess.Color.BLACK, this.board), new Position(0, 6));
@@ -59,6 +61,7 @@ public class ChessMatch {
 		this.board.placePiece(new Rook(game.chess.Color.WHITE, this.board), new Position(7, 0));
 		this.board.placePiece(new Knight(game.chess.Color.WHITE, this.board), new Position(7, 1));
 		this.board.placePiece(new Bishop(game.chess.Color.WHITE, this.board), new Position(7, 2));
+		this.board.placePiece(new Queen(game.chess.Color.WHITE, this.board), new Position(7, 3));
 		this.board.placePiece(new King(game.chess.Color.WHITE, this.board), new Position(7, 4));
 		this.board.placePiece(new Bishop(game.chess.Color.WHITE, this.board), new Position(7, 5));
 		this.board.placePiece(new Knight(game.chess.Color.WHITE, this.board), new Position(7, 6));
