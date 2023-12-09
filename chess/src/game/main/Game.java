@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import game.chess.ChessMatch;
+import game.chess.exceptions.ChessException;
 
 public class Game extends Canvas implements Runnable, MouseListener {
 
@@ -124,7 +125,11 @@ public class Game extends Canvas implements Runnable, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		this.chessMatch.mouseReleased(e);
+		try {
+			this.chessMatch.mouseReleased(e);
+		} catch (ChessException chessError) {
+			Game.exitWithError(chessError.getMessage());
+		}
 	}
 
 	@Override
