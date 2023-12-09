@@ -51,7 +51,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		try {
 			this.chessMatch = new ChessMatch();
 		} catch (IOException e) {
-			Game.exitWithError("Erro ao iniciar partida!");
+			Game.exitWithError("An unexpected error occurred...");
 		}
 	}
 
@@ -131,6 +131,8 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			}
 		} catch (ChessException chessError) {
 			Game.exitWithError(chessError.getMessage());
+		} catch (IOException chessError) {
+			Game.exitWithError("An unexpected error occurred...");
 		}
 	}
 

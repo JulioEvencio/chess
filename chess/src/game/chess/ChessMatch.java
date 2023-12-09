@@ -23,6 +23,7 @@ public class ChessMatch {
 	private boolean checkmate;
 	private game.chess.Color currentPlayer;
 	private Piece enPassantVulnerable;
+	private Piece promoted;
 
 	private final Board board;
 
@@ -35,6 +36,7 @@ public class ChessMatch {
 		this.checkmate = false;
 		this.currentPlayer = game.chess.Color.WHITE;
 		this.enPassantVulnerable = null;
+		this.promoted = null;
 
 		this.board = new Board();
 
@@ -91,7 +93,7 @@ public class ChessMatch {
 		return this.enPassantVulnerable;
 	}
 
-	public void mouseReleased(MouseEvent e) throws ChessException {
+	public void mouseReleased(MouseEvent e) throws ChessException, IOException {
 		int row = e.getY() / (Game.HEIGHT / this.board.getROW());
 		int column = e.getX() / (Game.WIDTH / this.board.getCOLUMN());
 
@@ -100,7 +102,7 @@ public class ChessMatch {
 		this.performChessMove();
 	}
 
-	private void performChessMove() throws ChessException {
+	private void performChessMove() throws ChessException, IOException {
 		if (this.sourcePosition != null && this.validateTargetPosition()) {
 			this.targetPosition = this.clickPosition;
 
@@ -110,6 +112,21 @@ public class ChessMatch {
 				this.undoMove(this.sourcePosition, this.targetPosition, pieceCaptured);
 			} else {
 				this.nextTurn();
+			}
+			
+			Piece movePiece = this.board.getPiece(this.targetPosition);
+			
+			// Special move - promotion
+			this.promoted = null;
+			
+			if (movePiece instanceof Pawn) {
+				if ((movePiece.getColor() == game.chess.Color.WHITE && this.targetPosition.getRow() == 0) || movePiece.getColor() == game.chess.Color.BLACK && this.targetPosition.getRow() == 7) {
+					this.promoted = this.board.getPiece(this.targetPosition);
+					String[] options = {"Queen", "Rook", "Bishop", "Knight"};
+					String type = (String) JOptionPane.showInputDialog(null, "Choose a piece", "Promotion", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					
+					this.promoted = this.replacePromotedPiece(type);
+				}
 			}
 
 			if (this.testCheckMate(this.getOpponent(this.currentPlayer))) {
@@ -129,8 +146,6 @@ public class ChessMatch {
 
 				thread.start();
 			}
-			
-			Piece movePiece = this.board.getPiece(this.targetPosition);
 			
 			// Special move - en passant
 			if (movePiece instanceof Pawn && (this.targetPosition.getRow() == this.sourcePosition.getRow() - 2 || this.targetPosition.getRow() == this.sourcePosition.getRow() + 2)) {
@@ -159,6 +174,38 @@ public class ChessMatch {
 		Piece piece = this.board.getPiece(this.clickPosition);
 
 		return piece != null && piece.isThereAnyPossibleMove() && piece.getColor() == this.currentPlayer;
+	}
+	
+	private Piece replacePromotedPiece(String type) throws ChessException, IOException {
+		if (this.promoted == null) {
+			throw new ChessException("There is no piece to be promoted!");
+		}
+		
+		if (type == null) {
+			type = "Queen";
+		}
+		
+		Position position = this.promoted.getPosition();
+		Piece piece = this.board.removePiece(position);
+		Piece newPiece;
+		
+		switch (type) {
+			case "Bishop":
+				newPiece = new Bishop(this.promoted.getColor(), this.board);
+				break;
+			case "Knight":
+				newPiece = new Knight(this.promoted.getColor(), this.board);
+				break;
+			case "Rook":
+				newPiece = new Rook(this.promoted.getColor(), this.board);
+				break;
+			default:
+				newPiece = new Queen(this.promoted.getColor(), this.board);
+		}
+		
+		this.board.placePiece(newPiece, position);
+		
+		return piece;
 	}
 
 	private Piece makeMove(Position source, Position target) {
