@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import game.chess.exceptions.ChessException;
+import game.chess.pieces.Bishop;
 import game.chess.pieces.King;
 import game.chess.pieces.Pawn;
 import game.chess.pieces.Piece;
@@ -38,7 +39,9 @@ public class ChessMatch {
 		this.targetPosition = null;
 
 		this.board.placePiece(new Rook(game.chess.Color.BLACK, this.board), new Position(0, 0));
+		this.board.placePiece(new Bishop(game.chess.Color.BLACK, this.board), new Position(0, 2));
 		this.board.placePiece(new King(game.chess.Color.BLACK, this.board), new Position(0, 4));
+		this.board.placePiece(new Bishop(game.chess.Color.BLACK, this.board), new Position(0, 5));
 		this.board.placePiece(new Rook(game.chess.Color.BLACK, this.board), new Position(0, 7));
 		
 		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 0));
@@ -51,7 +54,9 @@ public class ChessMatch {
 		this.board.placePiece(new Pawn(game.chess.Color.BLACK, this.board), new Position(1, 7));
 
 		this.board.placePiece(new Rook(game.chess.Color.WHITE, this.board), new Position(7, 7));
+		this.board.placePiece(new Bishop(game.chess.Color.WHITE, this.board), new Position(7, 2));
 		this.board.placePiece(new King(game.chess.Color.WHITE, this.board), new Position(7, 4));
+		this.board.placePiece(new Bishop(game.chess.Color.WHITE, this.board), new Position(7, 5));
 		this.board.placePiece(new Rook(game.chess.Color.WHITE, this.board), new Position(7, 0));
 		
 		this.board.placePiece(new Pawn(game.chess.Color.WHITE, this.board), new Position(6, 0));
