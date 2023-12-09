@@ -3,13 +3,16 @@ package game.chess.pieces;
 import java.io.IOException;
 
 import game.chess.Board;
+import game.chess.ChessMatch;
 import game.chess.Color;
 import game.chess.Position;
 import game.resources.Spritesheet;
 
 public class Pawn extends Piece {
+	
+	private ChessMatch chessMatch;
 
-	public Pawn(Color color, Board board) throws IOException {
+	public Pawn(Color color, Board board, ChessMatch chessMatch) throws IOException {
 		super(color, board);
 
 		Spritesheet spritesheet = new Spritesheet("/sprites/chess.png");
@@ -19,6 +22,8 @@ public class Pawn extends Piece {
 		} else {
 			super.sprite = spritesheet.getSprite(0, 128, 128, 128);
 		}
+		
+		this.chessMatch = chessMatch;
 	}
 
 	@Override
@@ -57,6 +62,20 @@ public class Pawn extends Piece {
 			if (super.getBoard().positionExists(position) && this.isThereOpponentPiece(position)) {
 				mat[position.getRow()][position.getColumn()] = true;
 			}
+			
+			// Special move en passant
+			if (this.getPosition().getRow() == 3) {
+				Position left = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 1);
+				Position right = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 1);
+
+				if (this.getBoard().positionExists(left) && this.isThereOpponentPiece(left) && this.getBoard().getPiece(left) == this.chessMatch.getEnPassantVulnerable()) {
+					mat[left.getRow() - 1][left.getColumn()] = true;
+				}
+				
+				if (this.getBoard().positionExists(right) && this.isThereOpponentPiece(right) && this.getBoard().getPiece(right) == this.chessMatch.getEnPassantVulnerable()) {
+					mat[right.getRow() - 1][right.getColumn()] = true;
+				}
+			}
 		} else {
 			position.setRow(super.getPosition().getRow() + 1);
 			position.setColumn(super.getPosition().getColumn());
@@ -86,6 +105,20 @@ public class Pawn extends Piece {
 			
 			if (super.getBoard().positionExists(position) && this.isThereOpponentPiece(position)) {
 				mat[position.getRow()][position.getColumn()] = true;
+			}
+			
+			// Special move en passant
+			if (this.getPosition().getRow() == 4) {
+				Position left = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 1);
+				Position right = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 1);
+
+				if (this.getBoard().positionExists(left) && this.isThereOpponentPiece(left) && this.getBoard().getPiece(left) == this.chessMatch.getEnPassantVulnerable()) {
+					mat[left.getRow() + 1][left.getColumn()] = true;
+				}
+				
+				if (this.getBoard().positionExists(right) && this.isThereOpponentPiece(right) && this.getBoard().getPiece(right) == this.chessMatch.getEnPassantVulnerable()) {
+					mat[right.getRow() + 1][right.getColumn()] = true;
+				}
 			}
 		}
 
