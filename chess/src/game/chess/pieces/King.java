@@ -3,13 +3,16 @@ package game.chess.pieces;
 import java.io.IOException;
 
 import game.chess.Board;
+import game.chess.ChessMatch;
 import game.chess.Color;
 import game.chess.Position;
 import game.resources.Spritesheet;
 
 public class King extends Piece {
 
-	public King(Color color, Board board) throws IOException {
+	private ChessMatch chessMatch;
+
+	public King(Color color, Board board, ChessMatch chessMatch) throws IOException {
 		super(color, board);
 
 		Spritesheet spritesheet = new Spritesheet("/sprites/chess.png");
@@ -19,6 +22,8 @@ public class King extends Piece {
 		} else {
 			super.sprite = spritesheet.getSprite(128 * 5, 128, 128, 128);
 		}
+
+		this.chessMatch = chessMatch;
 	}
 
 	@Override
@@ -91,6 +96,34 @@ public class King extends Piece {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
+		// Special move castling
+		if (this.getMoveCount() == 0 && !this.chessMatch.isCheck()) {
+			// Kingside rook
+			Position positionT1 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 3);
+
+			if (this.testRookCastling(positionT1)) {
+				Position p1 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 1);
+				Position p2 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 2);
+
+				if (super.getBoard().getPiece(p1) == null && super.getBoard().getPiece(p2) == null) {
+					mat[this.getPosition().getRow()][this.getPosition().getColumn() + 2] = true;
+				}
+			}
+
+			// Queenside rook
+			Position positionT2 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 4);
+
+			if (this.testRookCastling(positionT2)) {
+				Position p1 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 1);
+				Position p2 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 2);
+				Position p3 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 3);
+
+				if (super.getBoard().getPiece(p1) == null && super.getBoard().getPiece(p2) == null && super.getBoard().getPiece(p3) == null) {
+					mat[this.getPosition().getRow()][this.getPosition().getColumn() - 2] = true;
+				}
+			}
+		}
+
 		return mat;
 	}
 
@@ -98,6 +131,12 @@ public class King extends Piece {
 		Piece piece = super.getBoard().getPiece(position);
 
 		return piece == null || this.getColor() != piece.getColor();
+	}
+
+	private boolean testRookCastling(Position position) {
+		Piece piece = super.getBoard().getPiece(position);
+
+		return piece instanceof Rook && piece.getColor() == this.getColor() && piece.getMoveCount() == 0;
 	}
 
 }
