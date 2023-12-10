@@ -36,7 +36,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow() - 1);
 		position.setColumn(this.getPosition().getColumn());
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -44,7 +44,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow() + 1);
 		position.setColumn(this.getPosition().getColumn());
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -52,7 +52,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow());
 		position.setColumn(this.getPosition().getColumn() - 1);
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -60,7 +60,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow());
 		position.setColumn(this.getPosition().getColumn() + 1);
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -68,7 +68,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow() - 1);
 		position.setColumn(this.getPosition().getColumn() - 1);
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -76,7 +76,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow() - 1);
 		position.setColumn(this.getPosition().getColumn() + 1);
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -84,7 +84,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow() + 1);
 		position.setColumn(this.getPosition().getColumn() - 1);
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -92,7 +92,7 @@ public class King extends Piece {
 		position.setRow(this.getPosition().getRow() + 1);
 		position.setColumn(this.getPosition().getColumn() + 1);
 
-		if (super.getBoard().positionExists(position) && this.canMove(position)) {
+		if (super.getBoard().positionExists(position) && this.canMove(position) && !this.testCheckKing(position)) {
 			mat[position.getRow()][position.getColumn()] = true;
 		}
 
@@ -104,8 +104,9 @@ public class King extends Piece {
 			if (this.testRookCastling(positionT1)) {
 				Position p1 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 1);
 				Position p2 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 2);
+				Position king = new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 1);
 
-				if (super.getBoard().getPiece(p1) == null && super.getBoard().getPiece(p2) == null) {
+				if (super.getBoard().getPiece(p1) == null && super.getBoard().getPiece(p2) == null && !this.testCheckKing(king)) {
 					mat[this.getPosition().getRow()][this.getPosition().getColumn() + 2] = true;
 				}
 			}
@@ -117,8 +118,9 @@ public class King extends Piece {
 				Position p1 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 1);
 				Position p2 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 2);
 				Position p3 = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 3);
+				Position king = new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 1);
 
-				if (super.getBoard().getPiece(p1) == null && super.getBoard().getPiece(p2) == null && super.getBoard().getPiece(p3) == null) {
+				if (super.getBoard().getPiece(p1) == null && super.getBoard().getPiece(p2) == null && super.getBoard().getPiece(p3) == null && !this.testCheckKing(king)) {
 					mat[this.getPosition().getRow()][this.getPosition().getColumn() - 2] = true;
 				}
 			}
@@ -139,4 +141,22 @@ public class King extends Piece {
 		return piece instanceof Rook && piece.getColor() == this.getColor() && piece.getMoveCount() == 0;
 	}
 
+	private boolean testCheckKing(Position position) {
+		for (int i = 0; i < super.getBoard().getROW(); i++) {
+			for (int j = 0; j < super.getBoard().getCOLUMN(); j++) {
+				Piece piece = super.getBoard().getPiece(i, j);
+
+				if (piece != null && !(piece instanceof King) && piece.getColor() != this.getColor()) {
+					boolean[][] mat = piece.possibleMoves();
+
+					if (mat[position.getRow()][position.getColumn()]) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+	
 }
