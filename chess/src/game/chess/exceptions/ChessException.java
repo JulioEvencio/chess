@@ -1,6 +1,8 @@
 package game.chess.exceptions;
 
-public class ChessException extends Exception {
+import game.exceptions.GameException;
+
+public class ChessException extends GameException {
 
 	private static final long serialVersionUID = 1L;
 

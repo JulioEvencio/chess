@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -84,7 +83,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 	private void initChessMatch() {
 		try {
 			this.chessMatch = new ChessMatch();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
 		}
 	}
@@ -130,19 +129,23 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		double timer = System.currentTimeMillis();
 
 		while (true) {
-			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
-			lastTime = now;
+			try {
+				long now = System.nanoTime();
+				delta += (now - lastTime) / ns;
+				lastTime = now;
 
-			if (delta >= 1) {
-				this.tick();
-				this.render();
+				if (delta >= 1) {
+					this.tick();
+					this.render();
 
-				delta--;
-			}
+					delta--;
+				}
 
-			if (System.currentTimeMillis() - timer >= 1000) {
-				timer = System.currentTimeMillis();
+				if (System.currentTimeMillis() - timer >= 1000) {
+					timer = System.currentTimeMillis();
+				}
+			} catch (Exception e) {
+				Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
 			}
 		}
 	}
@@ -165,7 +168,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			}
 		} catch (ChessException chessError) {
 			Game.exitWithError(chessError.getMessage());
-		} catch (IOException chessError) {
+		} catch (Exception chessError) {
 			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
 		}
 	}
