@@ -14,11 +14,11 @@ public class StringGame {
 	public static String NewGame = "New Game";
 	public static String Confirm = "Confirm";
 	public static String Cancel = "Cancel";
-	public static String DoYouWantToStartANewGameTheCurrentGameWillBeLost = "Do you want to start a new game? \nThe current game will be lost...";
+	public static String DoYouWantToStartANewGameTheCurrentGameWillBeLost = "Do you want to start a new game?\nThe current game will be lost...";
 
 	public static String About = "About";
 	public static String Info = "Info";
-	public static String InfoMessage = "Chess - version 0.1 \n\nSoftware developed by Júlio Igreja \nhttps://github.com/JulioEvencio \nhttps://julio-igreja.itch.io/ \n\nThis project is open source and you can download the source code at: \nhttps://github.com/JulioEvencio/chess";
+	public static String InfoMessage = "Chess - version " + game.main.Game.VERSION + "\n\nSoftware developed by Júlio Igreja\nhttps://github.com/JulioEvencio\nhttps://julio-igreja.itch.io/\n\nThis project is open source and you can download the source code at:\nhttps://github.com/JulioEvencio/chess";
 
 	public static void load(String language) throws ResourcesException {
 		try {
@@ -106,7 +106,7 @@ public class StringGame {
 					throw new RuntimeException();
 				}
 
-				StringGame.InfoMessage = content.replace("\\n", "\n");
+				StringGame.InfoMessage = content.replace("\\n", "\n").replace("${version}", game.main.Game.VERSION);
 			}
 		} catch (Exception e) {
 			throw new ResourcesException("Erro ao carregar arquivos!");
