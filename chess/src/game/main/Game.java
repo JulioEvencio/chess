@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 
 import game.chess.ChessMatch;
 import game.chess.exceptions.ChessException;
+import game.strings.StringError;
+import game.strings.StringGame;
 
 public class Game extends Canvas implements Runnable, MouseListener {
 
@@ -34,7 +36,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 
 		JFrame frame = new JFrame();
 
-		frame.setTitle("Chess");
+		frame.setTitle(StringGame.Chess);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
 		frame.setResizable(false);
@@ -51,7 +53,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		try {
 			this.chessMatch = new ChessMatch();
 		} catch (IOException e) {
-			Game.exitWithError("An unexpected error occurred...");
+			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
 		}
 	}
 
@@ -132,7 +134,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		} catch (ChessException chessError) {
 			Game.exitWithError(chessError.getMessage());
 		} catch (IOException chessError) {
-			Game.exitWithError("An unexpected error occurred...");
+			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
 		}
 	}
 
@@ -151,7 +153,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 	}
 
 	public static void exitWithError(String error) {
-		JOptionPane.showMessageDialog(null, error, "Erro", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, error, StringError.Error, JOptionPane.ERROR_MESSAGE);
 		Game.exit();
 	}
 

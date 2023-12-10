@@ -15,6 +15,7 @@ import game.chess.pieces.Pawn;
 import game.chess.pieces.Piece;
 import game.chess.pieces.Queen;
 import game.chess.pieces.Rook;
+import game.chess.strings.StringChessMatch;
 import game.main.Game;
 
 public class ChessMatch {
@@ -122,8 +123,15 @@ public class ChessMatch {
 			if (movePiece instanceof Pawn) {
 				if ((movePiece.getColor() == game.chess.Color.WHITE && this.targetPosition.getRow() == 0) || movePiece.getColor() == game.chess.Color.BLACK && this.targetPosition.getRow() == 7) {
 					this.promoted = this.board.getPiece(this.targetPosition);
-					String[] options = {"Queen", "Rook", "Bishop", "Knight"};
-					String type = (String) JOptionPane.showInputDialog(null, "Choose a piece", "Promotion", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+					String[] options = {
+						StringChessMatch.Queen,
+						StringChessMatch.Rook,
+						StringChessMatch.Bishop,
+						StringChessMatch.Knight
+					};
+
+					String type = (String) JOptionPane.showInputDialog(null, StringChessMatch.ChooseAPiece, StringChessMatch.Promotion, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 					
 					this.promoted = this.replacePromotedPiece(type);
 				}
@@ -135,13 +143,13 @@ public class ChessMatch {
 				this.checkmate = true;
 
 				if (this.currentPlayer == game.chess.Color.WHITE) {
-					message = "Black won";
+					message = StringChessMatch.BlackWon;
 				} else {
-					message = "White won";
+					message = StringChessMatch.WhiteWon;
 				}
 
 				Thread thread = new Thread(() -> {
-					JOptionPane.showMessageDialog(null, message, "Checkmate", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, message, StringChessMatch.Checkmate, JOptionPane.INFORMATION_MESSAGE);
 				});
 
 				thread.start();
@@ -178,29 +186,25 @@ public class ChessMatch {
 	
 	private Piece replacePromotedPiece(String type) throws ChessException, IOException {
 		if (this.promoted == null) {
-			throw new ChessException("There is no piece to be promoted!");
+			throw new ChessException(StringChessMatch.ThereIsNoPieceToBePromoted);
 		}
 		
 		if (type == null) {
-			type = "Queen";
+			type = StringChessMatch.Queen;
 		}
 		
 		Position position = this.promoted.getPosition();
 		Piece piece = this.board.removePiece(position);
 		Piece newPiece;
 		
-		switch (type) {
-			case "Bishop":
-				newPiece = new Bishop(this.promoted.getColor(), this.board);
-				break;
-			case "Knight":
-				newPiece = new Knight(this.promoted.getColor(), this.board);
-				break;
-			case "Rook":
-				newPiece = new Rook(this.promoted.getColor(), this.board);
-				break;
-			default:
-				newPiece = new Queen(this.promoted.getColor(), this.board);
+		if (type.equals(StringChessMatch.Bishop)) {
+			newPiece = new Bishop(this.promoted.getColor(), this.board);
+		} else if (type.equals(StringChessMatch.Knight)) {
+			newPiece = new Knight(this.promoted.getColor(), this.board);
+		} else if (type.equals(StringChessMatch.Rook)) {
+			newPiece = new Rook(this.promoted.getColor(), this.board);
+		} else {
+			newPiece = new Queen(this.promoted.getColor(), this.board);
 		}
 		
 		this.board.placePiece(newPiece, position);
@@ -322,7 +326,7 @@ public class ChessMatch {
 			}
 		}
 
-		throw new ChessException("An unexpected error occurred...");
+		throw new ChessException(StringChessMatch.AnUnexpectedErrorOccurred);
 	}
 
 	private boolean testCheck(game.chess.Color color) throws ChessException {
