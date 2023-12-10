@@ -1,0 +1,11 @@
+Promoção
+Escolha uma peça
+Rainha
+Torre
+Bispo
+Cavalo
+Essa peça não pode ser promovida!
+Xeque Mate
+Pretas ganharam
+Brancas ganharam
+Um erro inesperado ocorreu...

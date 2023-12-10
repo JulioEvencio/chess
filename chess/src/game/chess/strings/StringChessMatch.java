@@ -1,5 +1,12 @@
 package game.chess.strings;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import game.resources.exceptions.ResourcesException;
+import game.strings.StringGame;
+
 public class StringChessMatch {
 
 	public static String Promotion = "Promotion";
@@ -19,5 +26,116 @@ public class StringChessMatch {
 	public static String WhiteWon = "White won!";
 
 	public static String AnUnexpectedErrorOccurred = "An unexpected error occurred...";
+
+	public static void load(String language) throws ResourcesException {
+		try {
+			String fileName = String.format("/language/game/chess/%s-chessmatch.txt", language);
+
+			InputStream file = StringGame.class.getResourceAsStream(fileName);
+
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
+				// Promotion
+				String content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.Promotion = content;
+
+				// ChooseAPiece
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.ChooseAPiece = content;
+
+				// Queen
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.Queen = content;
+
+				// Rook
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.Rook = content;
+
+				// Bishop
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.Bishop = content;
+
+				// Knight
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.Knight = content;
+
+				// ThereIsNoPieceToBePromoted
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.ThereIsNoPieceToBePromoted = content;
+
+				// Checkmate
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.Checkmate = content;
+
+				// BlackWon
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.BlackWon = content;
+
+				// WhiteWon
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.WhiteWon = content;
+
+				// AnUnexpectedErrorOccurred
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringChessMatch.AnUnexpectedErrorOccurred = content;
+			}
+		} catch (Exception e) {
+			throw new ResourcesException("Erro ao carregar arquivos!");
+		}
+	}
 
 }

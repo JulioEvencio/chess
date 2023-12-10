@@ -157,8 +157,4 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		Game.exit();
 	}
 
-	public static void main(String[] args) {
-		new Thread(new Game()).start();
-	}
-
 }
