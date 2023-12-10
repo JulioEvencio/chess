@@ -4,11 +4,13 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -76,6 +78,13 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
+		try {
+			Image imageIcon = ImageIO.read(getClass().getResource("/sprites/icon.png"));
+			frame.setIconImage(imageIcon);
+		} catch (Exception e) {
+			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
+		}
 
 		this.renderer = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_RGB);
 
