@@ -10,6 +10,16 @@ public class StringGame {
 
 	public static String Chess = "Chess";
 
+	public static String Game = "Game";
+	public static String NewGame = "New Game";
+	public static String Confirm = "Confirm";
+	public static String Cancel = "Cancel";
+	public static String DoYouWantToStartANewGameTheCurrentGameWillBeLost = "Do you want to start a new game? \nThe current game will be lost...";
+
+	public static String About = "About";
+	public static String Info = "Info";
+	public static String InfoMessage = "Chess - version 0.1 \n\nSoftware developed by Júlio Igreja \nhttps://github.com/JulioEvencio \nhttps://julio-igreja.itch.io/ \n\nThis project is open source and you can download the source code at: \nhttps://github.com/JulioEvencio/chess";
+
 	public static void load(String language) throws ResourcesException {
 		try {
 			String fileName = String.format("/language/game/%s-game.txt", language);
@@ -17,13 +27,86 @@ public class StringGame {
 			InputStream file = StringGame.class.getResourceAsStream(fileName);
 
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
+				// Chess
 				String content = reader.readLine();
 
 				if (content == null) {
 					throw new RuntimeException();
 				}
 
-				StringGame.Chess = content;
+				StringGame.Chess = content.replace("\\n", "\n");
+
+				// Game
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.Game = content.replace("\\n", "\n");
+
+				// NewGame
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.NewGame = content.replace("\\n", "\n");
+
+				// Confirm
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.Confirm = content.replace("\\n", "\n");
+
+				// Cancel
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.Cancel = content.replace("\\n", "\n");
+
+				// DoYouWantToStartANewGameTheCurrentGameWillBeLost
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.DoYouWantToStartANewGameTheCurrentGameWillBeLost = content.replace("\\n", "\n");
+
+				// About
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.About = content.replace("\\n", "\n");
+
+				// Info
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.Info = content.replace("\\n", "\n");
+
+				// InfoMessage
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.InfoMessage = content.replace("\\n", "\n");
 			}
 		} catch (Exception e) {
 			throw new ResourcesException("Erro ao carregar arquivos!");

@@ -11,7 +11,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.border.EmptyBorder;
 
 import game.chess.ChessMatch;
 import game.chess.exceptions.ChessException;
@@ -38,6 +42,34 @@ public class Game extends Canvas implements Runnable, MouseListener {
 
 		frame.setTitle(StringGame.Chess);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBorder(new EmptyBorder(0, 10, 0, 10));
+		frame.setJMenuBar(menuBar);
+
+		JMenu menuGame = new JMenu(StringGame.Game);
+		menuBar.add(menuGame);
+
+		JMenuItem menuItemNewGame = new JMenuItem(StringGame.NewGame);
+		menuItemNewGame.addActionListener((ActionEvent) -> {
+			Object[] options = { StringGame.Confirm, StringGame.Cancel };
+			int dialogResult = JOptionPane.showOptionDialog(this, StringGame.DoYouWantToStartANewGameTheCurrentGameWillBeLost, StringGame.NewGame, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+			
+			if(dialogResult == JOptionPane.YES_OPTION){
+				this.initChessMatch();
+			}
+		});
+		menuGame.add(menuItemNewGame);
+
+		JMenu menuAbout = new JMenu(StringGame.About);
+		menuBar.add(menuAbout);
+
+		JMenuItem menuItemInfo = new JMenuItem(StringGame.Info);
+		menuItemInfo.addActionListener((ActionEvent) -> {
+			JOptionPane.showMessageDialog(this, StringGame.InfoMessage, StringGame.About, JOptionPane.INFORMATION_MESSAGE);
+		});
+		menuAbout.add(menuItemInfo);
+		
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
