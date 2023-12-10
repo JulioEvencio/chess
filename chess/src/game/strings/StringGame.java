@@ -18,7 +18,7 @@ public class StringGame {
 
 	public static String About = "About";
 	public static String Info = "Info";
-	public static String InfoMessage = "Chess - version " + game.main.Game.VERSION + "\n\nSoftware developed by Júlio Igreja\nhttps://github.com/JulioEvencio\nhttps://julio-igreja.itch.io/\n\nThis project is open source and you can download the source code at:\nhttps://github.com/JulioEvencio/chess";
+	public static String InfoMessage = "Chess - version " + game.main.Game.VERSION + "\n\nSoftware developed by Júlio Igreja\nhttps://github.com/JulioEvencio\n\nThis project is open source and you can download the source code at:\nhttps://github.com/JulioEvencio/chess";
 
 	public static void load(String language) throws ResourcesException {
 		try {

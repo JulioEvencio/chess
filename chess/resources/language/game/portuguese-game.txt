@@ -3,7 +3,7 @@ Jogo
 Novo Jogo
 Confirmar
 Cancelar
-Deseja iniciar um novo jogo? \nA partida atual será perdida...
+Deseja iniciar um novo jogo?\nA partida atual será perdida...
 Sobre
 Info
-Xadrez - versão ${version} \n\nSoftware desenvolvido por Júlio Igreja \nhttps://github.com/JulioEvencio \nhttps://julio-igreja.itch.io/ \n\nEste projeto é open source e você pode baixar o código fonte em: \nhttps://github.com/JulioEvencio/chess
+Xadrez - versão ${version}\n\nSoftware desenvolvido por Júlio Igreja\nhttps://github.com/JulioEvencio\n\nEste projeto é open source e você pode baixar o código fonte em:\nhttps://github.com/JulioEvencio/chess
