@@ -43,7 +43,7 @@ public class Pawn extends Piece {
 			position.setRow(super.getPosition().getRow() - 2);
 			position.setColumn(super.getPosition().getColumn());
 
-			Position positionAux = new Position(super.getPosition().getRow() - 2, super.getPosition().getColumn());
+			Position positionAux = new Position(super.getPosition().getRow() - 1, super.getPosition().getColumn());
 
 			if (super.getBoard().positionExists(position) && !super.getBoard().thereIsAPiece(position) && super.getBoard().positionExists(positionAux) && !super.getBoard().thereIsAPiece(positionAux) && super.getMoveCount() == 0) {
 				mat[position.getRow()][position.getColumn()] = true;
@@ -87,7 +87,7 @@ public class Pawn extends Piece {
 			position.setRow(super.getPosition().getRow() + 2);
 			position.setColumn(super.getPosition().getColumn());
 
-			Position positionAux = new Position(super.getPosition().getRow() + 2, super.getPosition().getColumn());
+			Position positionAux = new Position(super.getPosition().getRow() + 1, super.getPosition().getColumn());
 
 			if (super.getBoard().positionExists(position) && !super.getBoard().thereIsAPiece(position) && super.getBoard().positionExists(positionAux) && !super.getBoard().thereIsAPiece(positionAux) && super.getMoveCount() == 0) {
 				mat[position.getRow()][position.getColumn()] = true;
