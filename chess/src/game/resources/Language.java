@@ -2,8 +2,8 @@ package game.resources;
 
 import javax.swing.JOptionPane;
 
+import game.Game;
 import game.chess.strings.StringChessMatch;
-import game.main.Game;
 import game.resources.exceptions.ResourcesException;
 import game.strings.StringError;
 import game.strings.StringGame;

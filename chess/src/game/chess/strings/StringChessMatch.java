@@ -1,7 +1,6 @@
 package game.chess.strings;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import game.resources.exceptions.ResourcesException;
@@ -31,9 +30,7 @@ public class StringChessMatch {
 		try {
 			String fileName = String.format("/language/game/chess/%s-chessmatch.txt", language);
 
-			InputStream file = StringGame.class.getResourceAsStream(fileName);
-
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(StringGame.class.getResourceAsStream(fileName)))) {
 				// Promotion
 				String content = reader.readLine();
 

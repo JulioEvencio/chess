@@ -1,4 +1,4 @@
-package game.main;
+package game;
 
 import java.awt.Canvas;
 import java.awt.Color;

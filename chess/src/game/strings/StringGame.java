@@ -1,7 +1,6 @@
 package game.strings;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import game.resources.exceptions.ResourcesException;
@@ -18,15 +17,13 @@ public class StringGame {
 
 	public static String About = "About";
 	public static String Info = "Info";
-	public static String InfoMessage = "Chess - version " + game.main.Game.VERSION + "\n\nSoftware developed by Júlio Igreja\nhttps://github.com/JulioEvencio\n\nThis project is open source and you can download the source code at:\nhttps://github.com/JulioEvencio/chess";
+	public static String InfoMessage = "Chess - version " + game.Game.VERSION + "\n\nSoftware developed by Júlio Igreja\nhttps://github.com/JulioEvencio\n\nThis project is open source and you can download the source code at:\nhttps://github.com/JulioEvencio/chess";
 
 	public static void load(String language) throws ResourcesException {
 		try {
 			String fileName = String.format("/language/game/%s-game.txt", language);
 
-			InputStream file = StringGame.class.getResourceAsStream(fileName);
-
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(StringGame.class.getResourceAsStream(fileName)))) {
 				// Chess
 				String content = reader.readLine();
 
@@ -106,7 +103,7 @@ public class StringGame {
 					throw new RuntimeException();
 				}
 
-				StringGame.InfoMessage = content.replace("\\n", "\n").replace("${version}", game.main.Game.VERSION);
+				StringGame.InfoMessage = content.replace("\\n", "\n").replace("${version}", game.Game.VERSION);
 			}
 		} catch (Exception e) {
 			throw new ResourcesException("Erro ao carregar arquivos!");

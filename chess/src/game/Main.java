@@ -1,4 +1,4 @@
-package game.main;
+package game;
 
 import game.resources.Language;
 

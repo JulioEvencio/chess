@@ -1,7 +1,6 @@
 package game.strings;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import game.resources.exceptions.ResourcesException;
@@ -15,9 +14,7 @@ public class StringError {
 		try {
 			String fileName = String.format("/language/game/%s-error.txt", language);
 
-			InputStream file = StringGame.class.getResourceAsStream(fileName);
-
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(StringGame.class.getResourceAsStream(fileName)))) {
 				// Error
 				String content = reader.readLine();
 

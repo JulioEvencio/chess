@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import game.Game;
 import game.chess.exceptions.ChessException;
 import game.chess.pieces.Bishop;
 import game.chess.pieces.King;
@@ -16,7 +17,6 @@ import game.chess.pieces.Piece;
 import game.chess.pieces.Queen;
 import game.chess.pieces.Rook;
 import game.chess.strings.StringChessMatch;
-import game.main.Game;
 
 public class ChessMatch {
 
