@@ -2,6 +2,7 @@ package game.strings;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import game.resources.exceptions.ResourcesException;
 
@@ -25,8 +26,7 @@ public class StringGame {
 		try {
 			String fileName = String.format("/language/game/%s-game.txt", language);
 
-			try (BufferedReader reader = new BufferedReader(
-					new InputStreamReader(StringGame.class.getResourceAsStream(fileName)))) {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(StringGame.class.getResourceAsStream(fileName), StandardCharsets.UTF_8))) {
 				// Chess
 				String content = reader.readLine();
 
