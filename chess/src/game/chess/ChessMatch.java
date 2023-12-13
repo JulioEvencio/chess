@@ -385,7 +385,7 @@ public class ChessMatch {
 		return true;
 	}
 
-	public void render(Graphics render) {
+	public void render(Graphics render) throws ChessException {
 		int squareWidth = Game.WIDTH / this.board.getROW();
 		int squareHeight = Game.HEIGHT / this.board.getCOLUMN();
 
@@ -412,7 +412,14 @@ public class ChessMatch {
 					Piece pieceSelected = this.board.getPiece(this.sourcePosition);
 
 					if (pieceSelected != null && pieceSelected.possibleMoves()[row][column]) {
-						this.renderRect(render, Color.GREEN, squareX, squareY, squareWidth, squareHeight);
+						Position position = new Position(row, column);
+						Piece pieceCaptured = this.makeMove(this.clickPosition, position);
+
+						if (!this.testCheck(this.getOpponent(this.currentPlayer))) {
+							this.renderRect(render, Color.GREEN, squareX, squareY, squareWidth, squareHeight);
+						}
+						
+						this.undoMove(this.clickPosition, position, pieceCaptured);
 					}
 				}
 

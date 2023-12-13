@@ -127,7 +127,12 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 
-		this.chessMatch.render(render);
+		try {
+			this.chessMatch.render(render);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
+		}
 
 		render.dispose();
 
