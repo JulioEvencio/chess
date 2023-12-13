@@ -1,9 +1,11 @@
 Xadrez
 Jogo
 Novo Jogo
+Sair
 Confirmar
 Cancelar
 Deseja iniciar um novo jogo?\nA partida atual será perdida...
+Sair do jogo?
 Sobre
 Info
 Xadrez - versão ${version}\n\nSoftware desenvolvido por Júlio Igreja\nhttps://github.com/JulioEvencio\n\nEste projeto é open source e você pode baixar o código fonte em:\nhttps://github.com/JulioEvencio/chess

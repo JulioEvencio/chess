@@ -63,6 +63,17 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			}
 		});
 		menuGame.add(menuItemNewGame);
+		
+		JMenuItem menuItemExit = new JMenuItem(StringGame.Exit);
+		menuItemExit.addActionListener((ActionEvent) -> {
+			Object[] options = { StringGame.Confirm, StringGame.Cancel };
+			int dialogResult = JOptionPane.showOptionDialog(this, StringGame.ExitGame, StringGame.Exit, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+			
+			if(dialogResult == JOptionPane.YES_OPTION){
+				Game.exit();
+			}
+		});
+		menuGame.add(menuItemExit);
 
 		JMenu menuAbout = new JMenu(StringGame.About);
 		menuBar.add(menuAbout);

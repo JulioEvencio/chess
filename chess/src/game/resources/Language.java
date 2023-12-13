@@ -28,7 +28,7 @@ public class Language {
 	private static String selectLanguage() {
 		String[] options = { "English", "Português" };
 
-		String language = (String) JOptionPane.showInputDialog(null, "", "Language", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		String language = (String) JOptionPane.showInputDialog(null, "", "Chess", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
 		if (language == null) {
 			language = "english";

@@ -11,9 +11,11 @@ public class StringGame {
 
 	public static String Game = "Game";
 	public static String NewGame = "New Game";
+	public static String Exit = "Exit";
 	public static String Confirm = "Confirm";
 	public static String Cancel = "Cancel";
 	public static String DoYouWantToStartANewGameTheCurrentGameWillBeLost = "Do you want to start a new game?\nThe current game will be lost...";
+	public static String ExitGame = "Exit game?";
 
 	public static String About = "About";
 	public static String Info = "Info";
@@ -23,7 +25,8 @@ public class StringGame {
 		try {
 			String fileName = String.format("/language/game/%s-game.txt", language);
 
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(StringGame.class.getResourceAsStream(fileName)))) {
+			try (BufferedReader reader = new BufferedReader(
+					new InputStreamReader(StringGame.class.getResourceAsStream(fileName)))) {
 				// Chess
 				String content = reader.readLine();
 
@@ -51,6 +54,15 @@ public class StringGame {
 
 				StringGame.NewGame = content.replace("\\n", "\n");
 
+				// Exit
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.Exit = content.replace("\\n", "\n");
+
 				// Confirm
 				content = reader.readLine();
 
@@ -77,6 +89,15 @@ public class StringGame {
 				}
 
 				StringGame.DoYouWantToStartANewGameTheCurrentGameWillBeLost = content.replace("\\n", "\n");
+				
+				// ExitGame
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.ExitGame = content.replace("\\n", "\n");
 
 				// About
 				content = reader.readLine();
