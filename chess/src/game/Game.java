@@ -121,7 +121,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 	}
 	
 	public static boolean isPerspectiveWhite() {
-		return perspectiveWhite;
+		return Game.perspectiveWhite;
 	}
 
 	private void tick() {
@@ -136,7 +136,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			return;
 		}
 
-		Graphics render = renderer.getGraphics();
+		Graphics render = this.renderer.getGraphics();
 
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
@@ -158,7 +158,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		render.dispose();
 
 		Graphics graphics = bs.getDrawGraphics();
-		graphics.drawImage(renderer, 0, 0, Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE, null);
+		graphics.drawImage(this.renderer, 0, 0, Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE, null);
 
 		// Code
 
