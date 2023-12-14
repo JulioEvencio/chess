@@ -1,6 +1,7 @@
 Xadrez
 Jogo
 Novo Jogo
+Inverter Tabuleiro
 Sair
 Confirmar
 Cancelar

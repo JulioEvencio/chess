@@ -19,6 +19,14 @@ public class Rook extends Piece {
 		} else {
 			super.sprite = spritesheet.getSprite(128 * 3, 128, 128, 128);
 		}
+		
+		Spritesheet spritesheetInverse = new Spritesheet("/sprites/chess-inverse.png");
+
+		if (super.getColor() == Color.BLACK) {
+			super.spriteInverse = spritesheetInverse.getSprite(128 * 2, 128, 128, 128);
+		} else {
+			super.spriteInverse = spritesheetInverse.getSprite(128 * 2, 0, 128, 128);
+		}
 	}
 
 	@Override

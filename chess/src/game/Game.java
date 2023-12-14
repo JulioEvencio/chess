@@ -4,9 +4,11 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -36,6 +38,8 @@ public class Game extends Canvas implements Runnable, MouseListener {
 	private final BufferedImage renderer;
 
 	private ChessMatch chessMatch;
+	
+	private static boolean perspectiveWhite = true;
 
 	public Game() {
 		this.addMouseListener(this);
@@ -63,6 +67,12 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			}
 		});
 		menuGame.add(menuItemNewGame);
+		
+		JMenuItem menuItemFlipBoard = new JMenuItem(StringGame.FlipBoard);
+		menuItemFlipBoard.addActionListener((ActionEvent) -> {
+			Game.perspectiveWhite = !Game.perspectiveWhite;
+		});
+		menuGame.add(menuItemFlipBoard);
 		
 		JMenuItem menuItemExit = new JMenuItem(StringGame.Exit);
 		menuItemExit.addActionListener((ActionEvent) -> {
@@ -109,12 +119,16 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
 		}
 	}
+	
+	public static boolean isPerspectiveWhite() {
+		return perspectiveWhite;
+	}
 
 	private void tick() {
 		// Code
 	}
 
-	private void render() {
+	private void render() throws ChessException {
 		BufferStrategy bs = this.getBufferStrategy();
 
 		if (bs == null) {
@@ -126,13 +140,20 @@ public class Game extends Canvas implements Runnable, MouseListener {
 
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+		
+		if (!Game.perspectiveWhite) {
+		    Graphics2D render2D = (Graphics2D) render;
 
-		try {
-			this.chessMatch.render(render);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
+		    int centerX = Game.WIDTH / 2;
+		    int centerY = Game.HEIGHT / 2;
+
+		    AffineTransform affineTransform = new AffineTransform();
+		    affineTransform.rotate(Math.PI, centerX, centerY);
+
+		    render2D.setTransform(affineTransform);
 		}
+
+		this.chessMatch.render(render);
 
 		render.dispose();
 

@@ -12,6 +12,7 @@ public class StringGame {
 
 	public static String Game = "Game";
 	public static String NewGame = "New Game";
+	public static String FlipBoard = "Flip Board";
 	public static String Exit = "Exit";
 	public static String Confirm = "Confirm";
 	public static String Cancel = "Cancel";
@@ -53,6 +54,15 @@ public class StringGame {
 				}
 
 				StringGame.NewGame = content.replace("\\n", "\n");
+				
+				// FlipBoard
+				content = reader.readLine();
+
+				if (content == null) {
+					throw new RuntimeException();
+				}
+
+				StringGame.FlipBoard = content.replace("\\n", "\n");
 
 				// Exit
 				content = reader.readLine();

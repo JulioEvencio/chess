@@ -23,6 +23,14 @@ public class Pawn extends Piece {
 			super.sprite = spritesheet.getSprite(0, 128, 128, 128);
 		}
 		
+		Spritesheet spritesheetInverse = new Spritesheet("/sprites/chess-inverse.png");
+
+		if (super.getColor() == Color.BLACK) {
+			super.spriteInverse = spritesheetInverse.getSprite(128 * 5, 128, 128, 128);
+		} else {
+			super.spriteInverse = spritesheetInverse.getSprite(128 * 5, 0, 128, 128);
+		}
+		
 		this.chessMatch = chessMatch;
 	}
 

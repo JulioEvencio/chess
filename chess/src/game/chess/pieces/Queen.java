@@ -19,6 +19,14 @@ public class Queen extends Piece {
 		} else {
 			super.sprite = spritesheet.getSprite(128 * 4, 128, 128, 128);
 		}
+		
+		Spritesheet spritesheetInverse = new Spritesheet("/sprites/chess-inverse.png");
+
+		if (super.getColor() == Color.BLACK) {
+			super.spriteInverse = spritesheetInverse.getSprite(128 * 1, 128, 128, 128);
+		} else {
+			super.spriteInverse = spritesheetInverse.getSprite(128 * 1, 0, 128, 128);
+		}
 	}
 
 	@Override

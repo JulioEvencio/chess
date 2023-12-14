@@ -3,6 +3,7 @@ package game.chess.pieces;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import game.Game;
 import game.chess.Board;
 import game.chess.Color;
 import game.chess.Position;
@@ -16,6 +17,7 @@ public abstract class Piece {
 	private final Board board;
 
 	protected BufferedImage sprite;
+	protected BufferedImage spriteInverse;
 
 	public Piece(Color color, Board board) {
 		this.color = color;
@@ -81,7 +83,11 @@ public abstract class Piece {
 	}
 
 	public void render(Graphics render, int x, int y, int width, int height) {
-		render.drawImage(this.sprite, x, y, width, height, null);
+		if (Game.isPerspectiveWhite()) {
+			render.drawImage(this.sprite, x, y, width, height, null);
+		} else {
+			render.drawImage(this.spriteInverse, x, y, width, height, null);
+		}
 	}
 
 }

@@ -97,10 +97,48 @@ public class ChessMatch {
 	public void mouseReleased(MouseEvent e) throws ChessException, IOException {
 		int row = e.getY() / (Game.HEIGHT / this.board.getROW());
 		int column = e.getX() / (Game.WIDTH / this.board.getCOLUMN());
+		
+		if (!Game.isPerspectiveWhite()) {
+			row = this.invertPosition(row);
+			column = this.invertPosition(column);
+		}
 
 		this.clickPosition = new Position(row, column);
 
 		this.performChessMove();
+	}
+	
+	private int invertPosition(int position) {
+		int positionInverse = -1;
+		
+		switch (position) {
+			case 0:
+				positionInverse = 7;
+				break;
+			case 1:
+				positionInverse = 6;
+				break;
+			case 2:
+				positionInverse = 5;
+				break;
+			case 3:
+				positionInverse = 4;
+				break;
+			case 4:
+				positionInverse = 3;
+				break;
+			case 5:
+				positionInverse = 2;
+				break;
+			case 6:
+				positionInverse = 1;
+				break;
+			case 7:
+				positionInverse = 0;
+				break;
+		}
+		
+		return positionInverse;
 	}
 
 	private void performChessMove() throws ChessException, IOException {
