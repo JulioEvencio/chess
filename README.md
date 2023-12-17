@@ -19,9 +19,9 @@ Click [here](https://www.youtube.com/watch?v=uhlNLTTNMDk) to watch the game demo
 ## Images
 
 <div style="display: inline"><br>
-  <img align="center" alt="Chess - Image 01" height="300" width="300" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4NS5wbmc=/original/LL2AZ4.png"/>
-  <img align="center" alt="Chess - Image 02" height="300" width="300" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4NC5wbmc=/original/0i8wB7.png"/>
-  <img align="center" alt="Chess - Image 03" height="300" width="300" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4My5wbmc=/original/UHJfPc.png"/>
+  <img align="center" alt="Chess - Image 01" height="300" width="300" style="margin: 10px;" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4NS5wbmc=/original/LL2AZ4.png"/>
+  <img align="center" alt="Chess - Image 02" height="300" width="300" style="margin: 10px;" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4NC5wbmc=/original/0i8wB7.png"/>
+  <img align="center" alt="Chess - Image 03" height="300" width="300" style="margin: 10px;" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4My5wbmc=/original/UHJfPc.png"/>
 </div>
 
 ## Contribution
