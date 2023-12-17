@@ -6,7 +6,9 @@ A software to play chess developed in Java.
 
 This project is a simple Java application. The class `game.Main` is responsible for running the program.
 
-**NOTE: You will need to add the `resources folder` to the project's `ClassPath`, that is, configure it so that this folder is inside the `JAR` when the project is compiled.**
+**NOTE 01: I recommend using JDK 8 or higher**
+
+**NOTE 02: You will need to add the `resources folder` to the project's `Class-Path`, that is, configure it so that this folder is inside the `JAR` when the project is compiled.**
 
 ## Links
 
