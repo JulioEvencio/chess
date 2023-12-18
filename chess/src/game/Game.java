@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.1";
 
 	public static final int SCALE = 1;
 	public static final int WIDTH = 600;
