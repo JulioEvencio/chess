@@ -21,14 +21,14 @@ public class Language {
 				StringChessMatch.load(language);
 			}
 		} catch (ResourcesException e) {
-			Game.exitWithError(e.getMessage());
+			Game.exitWithError(e.getMessage(), e);
 		}
 	}
 
 	private static String selectLanguage() {
 		String[] options = { "English", "Português" };
 
-		String language = (String) JOptionPane.showInputDialog(null, "", "Chess", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		String language = (String) JOptionPane.showInputDialog(null, "", StringGame.Chess, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
 		if (language == null) {
 			language = "english";

@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import game.chess.ChessMatch;
 import game.chess.exceptions.ChessException;
+import game.resources.Log;
 import game.strings.StringError;
 import game.strings.StringGame;
 
@@ -104,7 +105,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			Image imageIcon = ImageIO.read(getClass().getResource("/sprites/icon.png"));
 			frame.setIconImage(imageIcon);
 		} catch (Exception e) {
-			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
+			Game.exitWithError(StringError.AnUnexpectedErrorOccurred, e);
 		}
 
 		this.renderer = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -116,7 +117,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		try {
 			this.chessMatch = new ChessMatch();
 		} catch (Exception e) {
-			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
+			Game.exitWithError(StringError.AnUnexpectedErrorOccurred, e);
 		}
 	}
 	
@@ -193,7 +194,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 					timer = System.currentTimeMillis();
 				}
 			} catch (Exception e) {
-				Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
+				Game.exitWithError(StringError.AnUnexpectedErrorOccurred, e);
 			}
 		}
 	}
@@ -214,10 +215,8 @@ public class Game extends Canvas implements Runnable, MouseListener {
 			if (!this.chessMatch.isCheckmate()) {
 				this.chessMatch.mouseReleased(e);
 			}
-		} catch (ChessException chessError) {
-			Game.exitWithError(chessError.getMessage());
-		} catch (Exception chessError) {
-			Game.exitWithError(StringError.AnUnexpectedErrorOccurred);
+		} catch (Exception error) {
+			Game.exitWithError(StringError.AnUnexpectedErrorOccurred, error);
 		}
 	}
 
@@ -235,8 +234,9 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		System.exit(0);
 	}
 
-	public static void exitWithError(String error) {
-		JOptionPane.showMessageDialog(null, error, StringError.Error, JOptionPane.ERROR_MESSAGE);
+	public static void exitWithError(String message, Exception error) {
+		Log.save(error);
+		JOptionPane.showMessageDialog(null, message, StringError.Error, JOptionPane.ERROR_MESSAGE);
 		Game.exit();
 	}
 
