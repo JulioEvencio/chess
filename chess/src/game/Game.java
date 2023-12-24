@@ -113,7 +113,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		this.initChessMatch();
 	}
 
-	private void initChessMatch() {
+	private synchronized void initChessMatch() {
 		try {
 			this.chessMatch = new ChessMatch();
 		} catch (Exception e) {
@@ -121,15 +121,11 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		}
 	}
 	
-	public static boolean isPerspectiveWhite() {
+	public synchronized static boolean isPerspectiveWhite() {
 		return Game.perspectiveWhite;
 	}
 
-	private void tick() {
-		// Code
-	}
-
-	private void render() throws ChessException {
+	private synchronized void render() throws ChessException {
 		BufferStrategy bs = this.getBufferStrategy();
 
 		if (bs == null) {
@@ -184,7 +180,6 @@ public class Game extends Canvas implements Runnable, MouseListener {
 				lastTime = now;
 
 				if (delta >= 1) {
-					this.tick();
 					this.render();
 
 					delta--;
@@ -210,7 +205,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
+	public synchronized void mouseReleased(MouseEvent e) {
 		try {
 			if (!this.chessMatch.isCheckmate()) {
 				this.chessMatch.mouseReleased(e);
@@ -230,11 +225,11 @@ public class Game extends Canvas implements Runnable, MouseListener {
 		// Code
 	}
 
-	public static void exit() {
+	public synchronized static void exit() {
 		System.exit(0);
 	}
 
-	public static void exitWithError(String message, Exception error) {
+	public synchronized static void exitWithError(String message, Exception error) {
 		Log.save(error);
 		JOptionPane.showMessageDialog(null, message, StringError.Error, JOptionPane.ERROR_MESSAGE);
 		Game.exit();
