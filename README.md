@@ -2,6 +2,12 @@
 
 A software to play chess developed in Java.
 
+## Links
+
+Click [here](https://julio-igreja.itch.io/chess) to download the game.
+
+Click [here](https://www.youtube.com/watch?v=uhlNLTTNMDk) to watch the game demonstration video.
+
 ## How to run
 
 This project is a simple Java application. The class `game.Main` is responsible for running the program.
@@ -9,12 +15,6 @@ This project is a simple Java application. The class `game.Main` is responsible 
 **NOTE 01: I recommend using JDK 8 or higher**
 
 **NOTE 02: You will need to add the `resources folder` to the project's `Class-Path`, that is, configure it so that this folder is inside the `JAR` when the project is compiled.**
-
-## Links
-
-Click [here](https://julio-igreja.itch.io/chess) to download the game.
-
-Click [here](https://www.youtube.com/watch?v=uhlNLTTNMDk) to watch the game demonstration video.
 
 ## Images
 
