@@ -19,7 +19,7 @@ This project is a simple Java application. The class `game.Main` is responsible 
 ## Contribution
 Please feel free to send pull requests and report issues.
 
-## Images
+## Gallery
 
 <div style="display: inline"><br>
   <img align="center" alt="Chess - Image 01" height="300" width="300" style="margin: 10px;" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4NS5wbmc=/original/LL2AZ4.png"/>
