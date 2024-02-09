@@ -16,6 +16,9 @@ This project is a simple Java application. The class `game.Main` is responsible 
 
 **NOTE 02: You will need to add the `resources folder` to the project's `Class-Path`, that is, configure it so that this folder is inside the `JAR` when the project is compiled.**
 
+## Contribution
+Please feel free to send pull requests and report issues.
+
 ## Images
 
 <div style="display: inline"><br>
@@ -23,6 +26,3 @@ This project is a simple Java application. The class `game.Main` is responsible 
   <img align="center" alt="Chess - Image 02" height="300" width="300" style="margin: 10px;" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4NC5wbmc=/original/0i8wB7.png"/>
   <img align="center" alt="Chess - Image 03" height="300" width="300" style="margin: 10px;" src="https://img.itch.zone/aW1hZ2UvMjQyNTY1OC8xNDM1NzA4My5wbmc=/original/UHJfPc.png"/>
 </div>
-
-## Contribution
-Please feel free to send pull requests and report issues.
